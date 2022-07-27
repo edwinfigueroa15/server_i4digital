@@ -2,15 +2,14 @@ import { Model, DataTypes } from 'sequelize'
 import sequelize from '../config/db'
 
 export interface IUser {
-    id?: string;
+    identification_number: string;
+    identification_type: string;
     name: string;
     surname: string;
     age: number;
     date_of_birth: Date;
     address: string;
     phone: string;
-    identification_type: string;
-    identification_number: string;
     blood_type: string;
     email: string;
     status?: boolean;
@@ -80,7 +79,7 @@ User.init({
         defaultValue: true
     }}, {
 		tableName: "users",
-        timestamps: false,
+        timestamps: true,
 		sequelize
 	}
 )

@@ -16,6 +16,7 @@ class App {
     private port: string
     private apiPaths = {
         swagger: '/swagger',
+        user: '/api/user',
         illeness: '/api/illness'
     }
     
@@ -59,7 +60,8 @@ class App {
 
     routes() {
         this.app.use(this.apiPaths.swagger, swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-        this.app.use(this.apiPaths.illeness, routes.IllnessRoute)  
+        this.app.use(this.apiPaths.user, routes.UserRoute);
+        this.app.use(this.apiPaths.illeness, routes.IllnessRoute);
     }
 }
 

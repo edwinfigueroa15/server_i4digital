@@ -36,15 +36,15 @@ Illness.init({
         allowNull: false
     },
     sugar: {
-        type: DataTypes.DECIMAL(11, 2),
+        type: DataTypes.DECIMAL(11, 3),
         allowNull: false
     },
     fat: {
-        type: DataTypes.DECIMAL(11, 2),
+        type: DataTypes.DECIMAL(11, 3),
         allowNull: false
     },
     oxygen: {
-        type: DataTypes.DECIMAL(11, 2),
+        type: DataTypes.DECIMAL(11, 3),
         allowNull: false
     },
     risk: {
@@ -61,7 +61,7 @@ Illness.init({
 	}
 )
 
-User.hasOne(Illness, { foreignKey: 'id_user', onDelete: 'cascade' })
+User.hasMany(Illness, { foreignKey: 'id_user', onDelete: 'cascade' })
 Illness.belongsTo(User, { foreignKey: 'id_user', onDelete: 'cascade' })
 
 export default Illness;
