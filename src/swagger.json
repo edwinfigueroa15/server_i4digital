@@ -1,0 +1,18 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Reto técnico i4Digital",
+        "description": "Esta aplicacion esta desarrollada con NodeJs(Express), Typescript, Mysql(Sequelize)",
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:4000",
+            "description": "Servidor de desarrollo"
+        }
+    ]
+}
