@@ -6,12 +6,17 @@ config({ path: "./.env" })
 import swaggerUi from 'swagger-ui-express'
 import * as swaggerDocument from './swagger.json'
 
+import sequelize from './config/db'
+import './models'
+import routes from './routes'
+
 class App {
     private app: Application
     private host: string
     private port: string
     private apiPaths = {
-        swagger: '/swagger'
+        swagger: '/swagger',
+        illeness: '/api/illness'
     }
     
     constructor() {
@@ -20,12 +25,24 @@ class App {
         this.port = process.env.PORT || '4000'
 
         // METODOS INICIALES
+        this.dbConnection()
         this.middlewares()
         this.routes()
     }
 
     listen() {
         this.app.listen(this.port, () => console.log(`SERVER RUNNING ON: ${this.host}:${this.port}/`))
+    }
+
+    dbConnection(){
+        //PROBAR SI ESTA CONECTANDO A LA BASE DE DATOS
+        sequelize.authenticate()
+            .then(() => console.log('Connection to database has been established successfully'))
+            .catch(error => console.log('Unable to connect to the database: '+error))
+
+        sequelize.sync()
+            .then(() => console.log('Migrations completed'))
+            .catch(error => console.log('Failed to migrate database: ', error))
     }
 
     middlewares(){
@@ -41,7 +58,8 @@ class App {
     }
 
     routes() {
-        this.app.use(this.apiPaths.swagger, swaggerUi.serve, swaggerUi.setup(swaggerDocument));  
+        this.app.use(this.apiPaths.swagger, swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+        this.app.use(this.apiPaths.illeness, routes.IllnessRoute)  
     }
 }
 
