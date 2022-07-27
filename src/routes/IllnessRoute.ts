@@ -1,12 +1,14 @@
-import { Router, Request, Response } from 'express'
+import { Router, Request, Response } from 'express';
+import IllnessController from '../controllers/IllnessController';
+
 
 const router = Router()
 
 // USAR ANTES /api/illness
 // http://localhost:4000/api/illness
 
-router.get('/', (_req: Request, res: Response) => {
-    res.status(200).json({ msg: "Funciona la ruta" })
-})
+router.get('/all/:id', IllnessController.getAllByUser);
+router.get('/:id', IllnessController.getById);
+router.post('/register', IllnessController.register);
 
-export default router
+export default router;
