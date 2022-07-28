@@ -1,0 +1,330 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Reto técnico i4Digital",
+        "description": "Esta aplicacion esta desarrollada con NodeJs(Express), Typescript, Mysql(Sequelize)",
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:4000",
+            "description": "Servidor de desarrollo"
+        },
+        {
+            "url": "http://localhost:4000",
+            "description": "Servidor de producción"
+        }
+    ],
+    "paths": {
+        "/api/user/": {
+            "get": {
+                "summary": "Listar los usuarios paginados",
+                "tags": ["user"],
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Pagina altual (Por defecto es 0)",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "description": "Cantidad de registros a mostrar por cada pagina (Por defecto es 10)",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {          
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseObject"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/user/all/": {
+            "get": {
+                "summary": "Listar los usuarios (Sin paginar)",
+                "tags": ["user"],
+                "responses": {
+                    "200": {          
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseArray"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/user/{id}/": {
+            "get": {
+                "summary": "Listar un usuario específico por su ID",
+                "tags": ["user"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id del usuario",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {          
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseObject"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/user/register": {
+            "post": {
+                "summary": "Agregar un usuario",
+                "tags": ["user"],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateUser"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {          
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseObject"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/illness/all/{id}": {
+            "get": {
+                "summary": "Listar los registros de examenes por usuario",
+                "tags": ["illness"],
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Pagina altual (Por defecto es 0)",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "description": "Cantidad de registros a mostrar por cada pagina (Por defecto es 10)",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id del usuario",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {          
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseObject"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/illness/{id}/": {
+            "get": {
+                "summary": "Listar un registros de examen específico por su ID",
+                "tags": ["illness"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id del examen",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {          
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseObject"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/illness/register": {
+            "post": {
+                "summary": "Agregar un registro de examen",
+                "tags": ["illness"],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateExamen"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {          
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseObject"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "ResponseObject": {
+                "type": "object",
+                "required": ["msg", "type", "data"],
+                "properties": {
+                    "msg": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string"
+                    },
+                    "data": {
+                        "type": "object"
+                    }
+                }
+            },
+            "ResponseArray": {
+                "type": "object",
+                "required": ["msg", "type", "data"],
+                "properties": {
+                    "msg": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string"
+                    },
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "CreateUser": {
+                "type": "object",
+                "required": ["identification_number", "identification_type", "name", "surname", "age", "date_of_birth", "phone", "blood_type", "email"],
+                "properties": {
+                    "identification_number": {
+                        "type": "string"
+                    },
+                    "identification_type": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "surname": {
+                        "type": "string"
+                    },
+                    "age": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "date_of_birth": {
+                        "type": "string"
+                    },
+                    "phone": {
+                        "type": "string"
+                    },
+                    "blood_type": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    }
+                }
+            },
+            "CreateExamen": {
+                "type": "object",
+                "required": ["disease_name", "sugar", "fat", "oxygen", "risk", "id_user"],
+                "properties": {
+                    "disease_name": {
+                        "type": "string"
+                    },
+                    "sugar": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "fat": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "oxygen": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "risk": {
+                        "type": "string"
+                    },
+                    "id_user": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+}
