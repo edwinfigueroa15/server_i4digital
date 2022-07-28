@@ -19,6 +19,9 @@ class IllnessController {
         if(isNaN(sizeNumber) || sizeNumber < 0) sizeNumber = 10;
 
         try {
+            const userExist = await User.findOne({ where: { identification_number: id } });
+            if(!userExist) res.status(200).json({ msg: 'El usuario no existe', type: 'error', data: {} })
+            
             const response: IIllnessPagination = await Illness.findAndCountAll({
                 where: { id_user: id },
                 attributes: { exclude: ['updatedAt'] },
@@ -27,7 +30,7 @@ class IllnessController {
                 order: [ ['createdAt', 'DESC'] ]
             });
 
-            if(!response) res.status(404).json({ msg: 'Lo siento no pudimos encontrar la informacion', type: 'error', data: {} })
+            if(!response) res.status(200).json({ msg: 'Lo siento no pudimos encontrar la informacion', type: 'error', data: {} })
             res.status(200).json({ msg: 'Todos los registros por usuario', type: 'success', data: response })
         
         } catch (error) {

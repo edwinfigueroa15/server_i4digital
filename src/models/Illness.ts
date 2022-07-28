@@ -36,15 +36,15 @@ Illness.init({
         allowNull: false
     },
     sugar: {
-        type: DataTypes.DECIMAL(11, 3),
+        type: DataTypes.DECIMAL(11, 1),
         allowNull: false
     },
     fat: {
-        type: DataTypes.DECIMAL(11, 3),
+        type: DataTypes.DECIMAL(11, 1),
         allowNull: false
     },
     oxygen: {
-        type: DataTypes.DECIMAL(11, 3),
+        type: DataTypes.DECIMAL(11, 1),
         allowNull: false
     },
     risk: {
